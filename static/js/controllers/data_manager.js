@@ -899,6 +899,19 @@
       });
     }
 
+    $scope.diag_search = () => {
+        $scope.diag_show = !$scope.diag_show
+    }
+
+    $scope.model_search = () => {
+        $scope.showmodel = !$scope.showmodel
+    }
+
+    $scope.obs_search = () => {
+        $scope.showmee = !$scope.showmee
+    }
+
+
     $scope.get_facet_options = () => {
       $http({
         url: '/esgf/load_facets',

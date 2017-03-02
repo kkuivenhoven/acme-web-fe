@@ -1,0 +1,6 @@
+#!/export/kuivenhoven1/projects/acme-web-fe/venv/bin/python
+
+import sys
+from robot import rebot_cli
+
+rebot_cli(sys.argv[1:])

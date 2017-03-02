@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block title %} publication home{% endblock %}
 {% block extra_headers %}
+<script data-require="angular.js@1.2.x" src="http://code.angularjs.org/1.2.7/angular.js" data-semver="1.2.7"></script>
+{% load staticfiles %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script text="text/javascript" src="{%static "js/directives/test.js" %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css" rel="stylesheet"/>
 
 {% endblock %}
 
@@ -14,6 +20,16 @@
 
   <p><a class="btn wave-effect" href="/acme/dashboard" role="button">dashboard</a></p>
 
+</div>
+
+<br><br>
+
+<div>
+    <div ng-app="myapp">
+        <la-modal>
+            <p>Some contents</p>
+        </la-modal>
+    </div>
 </div>
 
 {% endblock %}

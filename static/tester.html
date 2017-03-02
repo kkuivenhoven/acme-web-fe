@@ -1,0 +1,31 @@
+<ul class="collapsible" data-collapsible="accordion">
+ <li>
+    <div class="collapsible-header"><i class="material-icons">filter_drama</i>Model Output</div>
+    <!--div class="collapsible-body"><p>This is first section.</p></div-->
+    <ul class="collapsible">
+        <li ng-repeat="model_folder in userdata.model_output">
+            <div class="collapsible-header" ng-click="load_model_cache(model_folder)">
+                <span>[[model_folder]]</span>
+            </div>
+            <div class="collapsible-body">
+                <ul class="collection">
+                    <li ng-repeat="m in model_cache[model_folder]">
+                        <span style="padding: 0.5rem; margin-left: 3vw;" ng-if="!m.endsWith('.nc')"> [[ m ]] </span>
+                        <span ng-if="m.endsWith('.nc')">
+                            <a href="" ng-click="open_nc(m, model_folder, 'model')" style="padding: 0.5rem; margin-left: 3vw;"> [[m]] </a>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+ </li>
+ <li>
+    <div class="collapsible-header"><i class="material-icons">place</i>Second Section</div>
+    <div class="collapsible-body"><p>This is second section.</p></div>
+ </li>
+ <li>
+    <div class="collapsible-header"><i class="material-icons">whatshot</i>Third Section</div>
+    <div class="collapsible-body"><p>This is third section.</p></div>
+ </li>
+</ul>
