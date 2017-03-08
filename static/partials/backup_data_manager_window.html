@@ -133,17 +133,10 @@
                     <label for="obs_query_field">filter</label>
                   </div>
                   <li ng-repeat="obs in obs_cache[obs_folder] | orderBy:obs | filter:obs_query | limitTo:obs_limit">
-                    <span style="padding: 0.5rem; margin-left: 3vw;">
-                     [[ obs ]]
-                    </span>
+                    <span style="padding: 0.5rem; margin-left: 3vw;">[[ obs ]]</span>
                   </li>
-                  <a href="" 
-                     class="waves-effect waves-light btn"
-                     ng-if="obs_limit < obs_cache[obs_folder].length" 
-                     ng-click="increase_obs_limit()"
-                     style="margin-left: 3vw;">
-                      more
-                  </a>
+                  <a href="" class="waves-effect waves-light btn" ng-if="obs_limit < obs_cache[obs_folder].length" 
+                     ng-click="increase_obs_limit()" style="margin-left: 3vw;">more</a>
                 </ul>
               </div>
             </li>

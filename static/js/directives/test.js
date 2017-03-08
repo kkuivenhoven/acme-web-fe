@@ -11,13 +11,9 @@
             replace: true,
             transclude: true,
             controller: function( $scope, $element, $attrs, $transclude ) {
-                $scope.thing = 'dog';
                 $scope.init = () => {
-                    $scope.thing = 'qua pasa linda cosa';
-                };
-                $(document).ready(function(){
                     $('.collapsible').collapsible();
-                });
+                };
             }
         }
     })

@@ -1,71 +1,96 @@
 (function(){
   'use strict';
-  
   angular.module('data_manager', ['ngAnimate', 'ngMaterial', 'ngWebworker'])
-  /*.service("alertService", function AlertSercie(){
-        var alertService = this;
-        app.alertMessage = "Something Failed";
-        app.alertType = "danger";
-        app.showAlert = true;
-  })*/
   .directive('userData', function() {
-        function reformatData(d, dir) {
-            var userdata = d[dir];
-            var userdata_keys = Object.keys(userdata);
-            userdata_keys.sort(); 
-            var data = userdata_keys.map((key, index) => {
-                var files = Object.keys(userdata[key]);
-                files.sort();
-                return {
-                    "name": key,
-                    "files": files
-                };
-            });
-            return data;
-        }
-
         return {
             restrict: 'E',
             scope: {
                 name: '@',
                 quote: '@',
-                directory: '@',
-                userdata: '@',
+                directory: '@'
             },
             templateUrl: '/static/generic.html',
             replace: true,
             transclude: true,
             controller: function( $scope, $element, $attrs, $transclude, $http ) { 
-                        $scope.init = () => {
-                            $('.collapsible').collapsible();
-                            console.log('about to start http');
-                            $scope.getUserData();
-                        };  
-                        $scope.getUserData = () => {
-                            $http({
-                                    url:'/esgf/get_folder_data/',
-                                    method: 'POST',
-                                    data: {
-                                        'path': $scope.directory
-                                    },
-                                    headers: {
-                                      'X-CSRFToken' : $scope.$parent.$parent.get_csrf(),
-                                      'Content-Type': 'application/json'
+                        $scope.get_csrf = () => {
+                            var cookieValue = null
+                            var name = 'csrftoken';
+                            if(document.cookie && document.cookie !== ''){
+                                var cookies = document.cookie.split(';');
+                                for(var i=0; i<cookies.length; i++){
+                                    var cookie = jQuery.trim(cookies[i]);
+                                    //Does this cookie string begin with the name we want?
+                                    if(cookie.substring(0, name.length + 1) === (name + '=')) {
+                                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                        break;
                                     }
-                            }).then((result) => {
-                                    // Retrieve just the one part we care about here
-                                $scope.userdata = reformatData(result.data, $scope.directory);
-                            }).catch((result) => {
-                                console.log(result);
-                            });
-                        } 
-                        $scope.buscar = () => {
-                            $scope.showmodel = !$scope.showmodel
+                                }
+                            }
+                            return cookieValue;
                         }
-
-                }   
+                $scope.init = () => {
+                    $('.collapsible').collapsible();
+                    console.log('about to start http');
+                    $http({
+                        url:'/esgf/get_user_data/',
+                        data: {
+                            'path': $scope.directory
+                        },
+                        headers: {
+                          'X-CSRFToken' : $scope.get_csrf(),
+                          'Content-Type': 'application/json'
+                        },
+                        method: 'POST'
+                    }).then((result) => {
+                        $scope.userdata = result.data;
+                    }).catch((result) => {
+                        console.log(result);
+                    });
+                    //ajax(url="some new api call").then((result) => {userdata = result.data}).catch((result) => {print result})
+                };  
             }   
-        }) 
+        }   
+    }) 
+  .directive('observations', function() {
+        return {
+            restrict: 'E',
+            templateUrl: '/static/observations.html',
+            replace: true,
+            transclude: true,
+            controller: function( $scope, $element, $attrs, $transclude ) { 
+                $scope.init = () => {
+                    $('.collapsible').collapsible();
+                };  
+            }   
+        }   
+    }) 
+  .directive('diagnosticOutput', function() {
+        return {
+            restrict: 'E',
+            templateUrl: '/static/diagnostic_output.html',
+            replace: true,
+            transclude: true,
+            controller: function( $scope, $element, $attrs, $transclude ) { 
+                $scope.init = () => {
+                    $('.collapsible').collapsible();
+                };  
+            }   
+        }   
+    }) 
+  .directive('modelOutput', function() {
+        return {
+            restrict: 'E',
+            templateUrl: '/static/model_output.html',
+            replace: true,
+            transclude: true,
+            controller: function( $scope, $element, $attrs, $transclude ) { 
+                $scope.init = () => {
+                    $('.collapsible').collapsible();
+                };  
+            }   
+        }   
+    }) 
   .controller('DataManagerControl', function($scope, $http, $timeout, $mdToast, Webworker) {
 
     /**
@@ -751,7 +776,7 @@
 
     $scope.get_user_data = () => {
       $http({
-        url: '/esgf/get_user_data/'
+        url: '/esgf/get_user_data'
       }).then((res) => {
         console.log(res.data);
         if(window.ACMEDashboard.user && window.ACMEDashboard.user != 'pending'){
@@ -802,7 +827,6 @@
       $scope.obs_cache = $scope.obs_cache || {};
       $scope.obs_cache[obs_folder] = Object.keys($scope.all_userdata['observations'][obs_folder]);
     }
-
     $scope.load_model_cache = (model_folder) => {
       $scope.model_cache = $scope.model_cache || {};
       $scope.model_cache[model_folder] = Object.keys($scope.all_userdata['model_output'][model_folder]);
@@ -965,6 +989,19 @@
       });
     }
 
+    $scope.diag_search = () => {
+        $scope.diag_show = !$scope.diag_show
+    }
+
+    $scope.model_search = () => {
+        $scope.showmodel = !$scope.showmodel
+    }
+
+    $scope.obs_search = () => {
+        $scope.showmee = !$scope.showmee
+    }
+
+
     $scope.get_facet_options = () => {
       $http({
         url: '/esgf/load_facets',
@@ -998,7 +1035,4 @@
     $interpolateProvider.startSymbol('[[');
     return $interpolateProvider.endSymbol(']]');
   });
-
 }).call(this);
-
-

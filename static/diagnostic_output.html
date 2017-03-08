@@ -1,0 +1,82 @@
+<ul class="collapsible popout" data-collapsible="accordion">
+ <li>
+
+                <div class="collapsible-header" ng-click="get_user_data()">
+                    <span>Diagnostic Output</span>
+                </div>
+
+
+        <div class="collapsible-body">
+            <div class="input-field col s6" ng-hide="diag_show" style="margin-left: 3vw;">
+              <input type="text" ng-model="d_obs_query" name="d_obs_query_field">
+              <label for="d_obs_query_field">filter</label>
+            </div>
+          <ul class="collapsible">
+            <li ng-repeat="diag_folder in userdata.diagnostic_output | orderBy:diag_folder | filter: d_obs_query">
+              <div class="collapsible-header" ng-click="load_diag_cache(diag_folder); diag_search()">
+                <span>[[ diag_folder ]]</span>
+              </div>
+              <div class="collapsible-body">
+                <ul class="collection">
+                  <li>
+                    <div style="padding: 0.5em;">
+                      <span>
+                        <a href="/run_manager/get_output_zip?run_name=[[ diag_folder ]]&run_type=diagnostic"
+                           class="waves-effect waves-light btn" 
+                           style="margin-left: 3vw;">
+                             download zip
+                          </a>
+                      </span>
+                      <span>
+                        <a href="" 
+                           class="waves-effect waves-light btn"
+                           ng-click="publish_modal(diag_folder)">
+                             publish to esgf
+                           </a>
+                      </span>
+                      <span>
+                        <a href="" 
+                           class="waves-effect waves-light btn"
+                           ng-click="upload_to_viewer_trigger(diag_folder)">
+                             upload to viewer
+                           </a>
+                      </span>
+                    </div>
+                  </li>
+                  <hr>
+                  <span style="padding: 0.5rem; margin-left: 3vw;"> favorite plots </span>
+                  <li ng-repeat="fav in favorite_plots | orderBy:fav">
+                    <a href="" ng-click="open_output(fav, diag_folder)" style="padding: 0.5rem; margin-left: 3vw;"
+                        ng-if="diag_cache[diag_folder].includes(fav)">[[ fav ]]</a>
+                  </li>
+                  <hr>
+                  <div class="input-field col s6" style="margin-left: 3vw;">
+                    <input type="text" ng-model="diag_query" name="diag_query_field">
+                    <label for="diag_query_field">filter</label>
+                  </div>
+                  <li ng-repeat="diag in diag_cache[diag_folder] | orderBy:diag | filter:diag_query | limitTo:diag_limit">
+                    <span ng-if="diag.endsWith('.png') || diag.endsWith('.svg')">
+                      <a href="" ng-click="open_output(diag, diag_folder)" style="padding: 0.5rem; margin-left: 3vw;"> [[ diag ]] </a>
+                    </span>
+                    <span ng-if="diag.endsWith('.nc')">
+                      <a href="" ng-click="open_nc(diag, diag_folder, 'diagnostic')" style="padding: 0.5rem; margin-left: 3vw;">[[ diag ]]</a>
+                    </span>
+                    <span ng-if="diag.endsWith('.pdf')">
+                      <a href="" ng-click="open_pdf(diag, diag_folder, 'diagnostic')" style="padding: 0.5rem; margin-left: 3vw;">[[ diag ]]</a>
+                    </span>
+                    <span ng-if="!diag.endsWith('.png') && !diag.endsWith('.nc') && !diag.endsWith('.svg') && !diag.endsWith('.pdf')" 
+                          style="padding: 0.5rem; margin-left: 3vw;">[[ diag ]]</span>
+                  </li>
+                  <a href="" class="waves-effect waves-light btn" ng-click="increase_diag_limit()" style="margin-left: 3vw;"> more </a>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+
+    </div>
+
+ </li>
+</ul>

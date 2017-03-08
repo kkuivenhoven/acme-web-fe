@@ -504,8 +504,30 @@ def node_list(request):
 #
 @login_required
 def get_user_data(request):
+    """
+    Returns a users private userdata directery
+    """
     user = str(request.user)
     path = os.path.abspath(os.path.dirname(__file__)) + '/../../userdata/' + user
+    print os.path.abspath(os.path.dirname(__file__))
+    print 'blorky'
+    if not os.path.exists(path):
+        print  path
+        return HttpResponse(status=500)
+    userdata = get_directory_structure(path)
+    return HttpResponse(json.dumps(userdata))
+
+@login_required
+def get_folder_data(request):
+    """
+    Returns a users private userdata directery
+    """
+    data = json.loads(request.body)
+    path = data.get('path')
+    user = str(request.user)
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '../../userdata/', user, path)
+    if not os.path.exists(path):
+        return HttpResponse(status=500)
     userdata = get_directory_structure(path)
     return HttpResponse(json.dumps(userdata))
 
