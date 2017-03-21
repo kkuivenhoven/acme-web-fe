@@ -9,6 +9,11 @@
   <div ng-show="step == -1">
     <ul class="collapsible popout" data-collapsible="accordion">
       <li>
+
+
+
+
+
         <div class="collapsible-header" ng-click="get_user_data()">
           <span>Diagnostic Output</span>
         </div>
@@ -22,38 +27,37 @@
               <div class="collapsible-header" ng-click="load_diag_cache(diag_folder); diag_search()">
                 <span>[[ diag_folder ]]</span>
               </div>
+
+
+
+
               <div class="collapsible-body">
                 <ul class="collection">
+
+
+
+
                   <li>
                     <div style="padding: 0.5em;">
                       <span>
-                        <a href="/run_manager/get_output_zip?run_name=[[ diag_folder ]]&run_type=diagnostic"
-                           class="waves-effect waves-light btn" 
-                           style="margin-left: 3vw;">
-                             download zip
-                          </a>
+                        <a href="/run_manager/get_output_zip?run_name=[[ diag_folder ]]&run_type=diagnostic" class="waves-effect waves-light btn" style="margin-left: 3vw;">download zip</a>
                       </span>
                       <span>
-                        <a href="" 
-                           class="waves-effect waves-light btn"
-                           ng-click="publish_modal(diag_folder)">
-                             publish to esgf
-                           </a>
+                        <a href="" class="waves-effect waves-light btn" ng-click="publish_modal(diag_folder)">publish to esgf</a>
                       </span>
                       <span>
-                        <a href="" 
-                           class="waves-effect waves-light btn"
-                           ng-click="upload_to_viewer_trigger(diag_folder)">
-                             upload to viewer
-                           </a>
+                        <a href="" class="waves-effect waves-light btn" ng-click="upload_to_viewer_trigger(diag_folder)">upload to viewer</a>
                       </span> 
                     </div>
                   </li>
+
+
+
+
                   <hr>
                   <span style="padding: 0.5rem; margin-left: 3vw;"> favorite plots </span>
                   <li ng-repeat="fav in favorite_plots | orderBy:fav">
-                    <a href="" ng-click="open_output(fav, diag_folder)" style="padding: 0.5rem; margin-left: 3vw;"
-                        ng-if="diag_cache[diag_folder].includes(fav)">[[ fav ]]</a>
+                    <a href="" ng-click="open_output(fav, diag_folder)" style="padding: 0.5rem; margin-left: 3vw;" ng-if="diag_cache[diag_folder].includes(fav)">[[ fav ]]</a>
                   </li>
                   <hr>
                   <div class="input-field col s6" style="margin-left: 3vw;">
@@ -74,12 +78,20 @@
                           style="padding: 0.5rem; margin-left: 3vw;">[[ diag ]]</span>
                   </li>
                   <a href="" class="waves-effect waves-light btn" ng-click="increase_diag_limit()" style="margin-left: 3vw;"> more </a>
+
+
+
+
                 </ul>
               </div>
             </li>
           </ul>
         </div>
       </li>
+
+
+
+
       <li>
         <div class="collapsible-header" ng-click="get_user_data()">
           <span>Model Output</span>
@@ -422,7 +434,7 @@
   </div>
 
   <div class="modal" id="publish_modal" style="max-height: 80%;">
-<!--     <div class="input-field col s6" ng-show="publish_configs">
+    <!--div class="input-field col s6" ng-show="publish_configs">
       <select>
         <option ng-repeat="config in publish_configs"> [[ config.name ]] </option>
       </select>
@@ -432,59 +444,44 @@
       <input id="publish_config_name" ng-model="publish_config_name" type="text">
       <label for="publish_config_name">Configuration name</label>
     </div> -->
-    <div class="input-field col s6" style="margin: 1em;">
-      <input id="publish_name" type="text">
-      <label for="publish_name">Publication name</label>
-    </div>
-    <div class="input-field col s6" style="margin: 1em;">
-      <input id="org_name" type="text">
-      <label for="org_name">Organization</label>
-    </div>
-    <div class="input-field col s6" style="margin: 1em;">
-      <input id="publication_author_name_first" type="text">
-      <label for="publication_author_name_first">Author first name</label>
-    </div>
-    <div class="input-field col s6" style="margin: 1em;">
-      <input id="publication_author_name_last" type="text">
-      <label for="publication_author_name_last">Author last name</label>
-    </div>
-    <div class="input-field col s6" style="margin: 1em;">
-      <input id="publication_description" type="text">
-      <label for="publication_description">Description</label>
-    </div>
-    <div class="input-field col s6" style="margin: 1em;">
-      <input id="publication_datanode" type="text">
-      <label for="publication_datanode">Datanode</label>
-    </div>
-    <div ng-repeat="facet in facet_list">
-      <div class="input-field col s4" style="margin: 1em;">
-        <input type="text" id="new_facet_name_[[facet]]" 
-              style="margin: 1em 0em 1em 0em;">
-        <label for="new_facet_name_[[facet]]">facet name</label>
+      <div class="input-field col s6" style="margin: 1em;">
+        <input id="publish_name" type="text">
+        <label for="publish_name">Publication name</label>
       </div>
-      <div class="input-field col s4" style="margin: 1em;">
-        <input type="text" id="new_facet_value_[[facet]]">
-        <label for="new_facet_value_[[facet]]">facet value</label>
+      <div class="input-field col s6" style="margin: 1em;">
+        <input id="org_name" type="text">
+        <label for="org_name">Organization</label>
       </div>
-    </div>
-    <a href="" 
-       class="waves-effect waves-light btn" 
-       ng-click="new_facet()"
-       style="margin: 1em;">
-        new facet
-    </a>
-<!--     <a href="" 
-       class="waves-effect waves-light btn" 
-       ng-click="save_publication_config()"
-       style="margin: 1em 0em 1em 0em;">
-        save configuration
-    </a> -->
-    <a href="" 
-       class="waves-effect waves-light btn" 
-       ng-click="publish_credential_modal_trigger()"
-       style="margin: 1em;">
-        publish [[data_folder]]
-    </a>
+      <div class="input-field col s6" style="margin: 1em;">
+        <input id="publication_author_name_first" type="text">
+        <label for="publication_author_name_first">Author first name</label>
+      </div>
+      <div class="input-field col s6" style="margin: 1em;">
+        <input id="publication_author_name_last" type="text">
+        <label for="publication_author_name_last">Author last name</label>
+      </div>
+      <div class="input-field col s6" style="margin: 1em;">
+        <input id="publication_description" type="text">
+        <label for="publication_description">Description</label>
+      </div>
+      <div class="input-field col s6" style="margin: 1em;">
+        <input id="publication_datanode" type="text">
+        <label for="publication_datanode">Datanode</label>
+      </div>
+      <div ng-repeat="facet in facet_list">
+        <div class="input-field col s4" style="margin: 1em;">
+          <input type="text" id="new_facet_name_[[facet]]" 
+                style="margin: 1em 0em 1em 0em;">
+          <label for="new_facet_name_[[facet]]">facet name</label>
+        </div>
+        <div class="input-field col s4" style="margin: 1em;">
+          <input type="text" id="new_facet_value_[[facet]]">
+          <label for="new_facet_value_[[facet]]">facet value</label>
+        </div>
+      </div>
+        <a href="" class="waves-effect waves-light btn" ng-click="new_facet()" style="margin: 1em;">new facet</a>
+        <!--a href="" class="waves-effect waves-light btn" ng-click="save_publication_config()" style="margin: 1em 0em 1em 0em;">save configuration</a> -->
+        <a href="" class="waves-effect waves-light btn" ng-click="publish_credential_modal_trigger()" style="margin: 1em;">publish [[data_folder]]</a>
   </div>
 
   <div class="modal" id="upload_to_viewer_modal">
@@ -535,53 +532,22 @@
       <input id="publish_password" ng-model="publish_password" type="password">
       <label for="publish_password">password</label>
     </div>
-    <a href=""
-       ng-click="publish_from_remote()"
-       class="waves-light wave-effect btn">
-        submit
-    </a>
+    <a href="" ng-click="publish_from_remote()" class="waves-light wave-effect btn"> submit </a>
   </div>
 
   <div class="modal" id="image_view_modal_data_manager" style="width: fit-content; max-height: 80%;">
     <p id="image_title_data_manager" style="text-align: center;"></p>
-    <img ng-show="image_type == 'image'" 
-         id="image_view_data_manager" 
-         style="margin: 1vw;" 
-         class="" 
-         src=""/>
-    <object ng-show="image_type == 'pdf'" 
-            id="pdf_view_data_manager" 
-            style="margin: 1vw; width:70vw; height: 60vh;" 
-            data=""
-            type='application/pdf'></object>
+    <img ng-show="image_type == 'image'" id="image_view_data_manager" style="margin: 1vw;" class="" src=""/>
+    <object ng-show="image_type == 'pdf'" id="pdf_view_data_manager" style="margin: 1vw; width:70vw; height: 60vh;" data="" type='application/pdf'></object>
     <div class="" style="display: flex; justify-content: space-between; width: 100%">
       <div>
-        <a href="#"
-         target="_blank"
-         ng-click="$('#image_view_modal').closeModal()"
-         style="margin: 1vw;"
-         class="waves-effect waves-light btn"
-         id="image_link_data_manager">
-          new window
-       </a>
+        <a href="#" target="_blank" ng-click="$('#image_view_modal').closeModal()" style="margin: 1vw;" class="waves-effect waves-light btn" id="image_link_data_manager">new window</a>
       </div>
       <div>
-        <a href=""
-          style="margin:1vw;"
-          class="waves-effect waves-light btn"
-          id="image_set_favorite_data_manager"
-          ng-click="set_favorite_plot()">
-           favorite
-       </a>
+        <a href="" style="margin:1vw;" class="waves-effect waves-light btn" id="image_set_favorite_data_manager" ng-click="set_favorite_plot()">favorite</a>
       </div>
       <div>
-        <a href="#"
-          style="margin: 1vw;"
-          class="waves-effect waves-light btn"
-          id="image_download_link_data_manager"
-          download>
-           download
-       </a>
+        <a href="#" style="margin: 1vw;" class="waves-effect waves-light btn" id="image_download_link_data_manager" download>download</a>
       </div>
     </div>
   </div>

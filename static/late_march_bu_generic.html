@@ -29,13 +29,28 @@
                         <li ng-repeat="data_folder in userdata | filter: m_obs_query">
                             <div class="collapsible-header" ng-click="load_model_cache(data_folder); toggle_search()" style="position: relative">
                                 <span>{{data_folder.name}}</span>
-                                    {{message}}
                             </div>
                             <div class="collapsible-body" style="position: relative">
                                 <span ng-if="name != 'Diagnostic Output'">
                                     <span ng-repeat="file in data_folder.files">
                                         <span ng-if="data_folder.sub_folders[data_folder.files.indexOf(file)].length == 0" style="padding-left:1em">
-                                            <a ng-click="triggerModal('image_view_modal_data_manager', file, data_folder);" class="modal-trigger">{{file}}</a><br>
+                                          <span>
+                                            <!--button ng-click="show_nested_modal();" class="btn modal-trigger">Modal</button-->
+                                            <la-modal></la-modal>
+                                            <!--button ng-click="nested_showModal(num);" data-target="nested_modal{{num}}" class="btn modal-trigger" id="btn-1">The Modal</button>
+                                            <div id="nested_modal{{num}}" class="modal modaaal">
+                                                <div class="modal-content">
+                                                    <span id="thisstring{{num}}">nested_modal{{num}}</span>
+                                                    <h4>I'm the coolest nested header</h4>
+                                                    <h3>File: {{file}} | {{num}} |</h3>
+                                                    <p>A bunch of text that wishes it was as cool as the coolest nested header.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                                                </div>
+                                            </div-->
+                                          </span>
+                                            {{file}}<br>
                                         </span>
 
                                             <span ng-if="data_folder.sub_folders[data_folder.files.indexOf(file)].length != 0">
@@ -51,8 +66,8 @@
                                                                 <span ng-repeat="(sub_key, value1) in value">
                                                                     <span ng-if="sub_key == file"> 
                                                                         <span ng-repeat="(lala, vala) in value1">
-                                                                            <span ng-repeat="sub_file in vala">
-                                                                                <a ng-click="nested_triggerModal('image_view_modal_data_manager', file, sub_file, data_folder);" class="modal-trigger">{{sub_file}}</a><br>
+                                                                            <span ng-repeat="v in vala">
+                                                                                 {{v}} <br> 
                                                                             </span>
                                                                         </span>
                                                                     </span>

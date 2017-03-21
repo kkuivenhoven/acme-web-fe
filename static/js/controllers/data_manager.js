@@ -1,13 +1,7 @@
 (function(){
   'use strict';
-  
+
   angular.module('data_manager', ['ngAnimate', 'ngMaterial', 'ngWebworker'])
-  /*.service("alertService", function AlertSercie(){
-        var alertService = this;
-        app.alertMessage = "Something Failed";
-        app.alertType = "danger";
-        app.showAlert = true;
-  })*/
   .directive('userData', function() {
         function reformatData(d, dir) {
             var userdata = d[dir];
@@ -16,14 +10,28 @@
             var data = userdata_keys.map((key, index) => {
                 var files = Object.keys(userdata[key]);
                 files.sort();
+                var sub_folders = files.map((sub_key, index) => {
+                   
+                    if(userdata[key][sub_key] === null){
+                          return "";
+                    }
+                    else{
+                        var sub_files = Object.keys(userdata[key][sub_key]);
+                        sub_files.sort();
+                        var dict = {};
+                        dict[sub_key] = {};
+                        dict[sub_key]['sub_files'] = sub_files;
+                        return dict;
+                    }
+                });
                 return {
                     "name": key,
-                    "files": files
+                    "files": files,
+                    "sub_folders": sub_folders, 
                 };
             });
             return data;
         }
-
         return {
             restrict: 'E',
             scope: {
@@ -35,13 +43,14 @@
             templateUrl: '/static/generic.html',
             replace: true,
             transclude: true,
-            controller: function( $scope, $element, $attrs, $transclude, $http ) { 
+            controller: function( $scope, $element, $attrs, $transclude, $http, $timeout) { 
                         $scope.init = () => {
-                            $('.collapsible').collapsible();
-                            console.log('about to start http');
                             $scope.getUserData();
+                            $('.modal-trigger').leanModal();
                         };  
                         $scope.getUserData = () => {
+                            
+                            console.log('about to start http for ' + $scope.directory);
                             $http({
                                     url:'/esgf/get_folder_data/',
                                     method: 'POST',
@@ -53,19 +62,62 @@
                                       'Content-Type': 'application/json'
                                     }
                             }).then((result) => {
-                                    // Retrieve just the one part we care about here
-                                $scope.userdata = reformatData(result.data, $scope.directory);
+                                // Retrieve just the one part we care about here
+                                console.log('returning http for ' + $scope.directory);
+                                var data = reformatData(result.data, $scope.directory);
+                                /*this.addChild = function(nestedDirective) {
+                                    console.log('Got the message from nested directive:' + nestedDirective.message);
+                                };*/
+                                $scope.userdata = data;
+                                $timeout( () => {
+                                    $('.userDataC').collapsible();
+                                }, 500);
                             }).catch((result) => {
                                 console.log(result);
                             });
                         } 
-                        $scope.buscar = () => {
+                        $scope.toggle_search = () => {
                             $scope.showmodel = !$scope.showmodel
                         }
-
+                        $scope.nested_showModal = (num) => {
+                            $('.modal-trigger').leanModal();
+                            $('#nested_modal' + num).openModal();
+                        };
+                        $scope.showModal = () => {
+                            $('.modal1', opener.document).openModal();
+                        };
+                        $scope.triggerModal = (id, file, folder) => {
+                                 var src = '/acme/userdata/image/userdata/' + window.ACMEDashboard.user + '/' + $scope.directory + '/' + folder.name + '/' + file;
+                                 $('#image_view_data_manager_img').attr('src', src);
+                                 $('#' + id).openModal();
+                        }
+                        $scope.nested_triggerModal = (id, file, sub_file, folder) => {
+                                 var src = '/acme/userdata/image/userdata/' + window.ACMEDashboard.user + '/' + $scope.directory + '/' + folder.name + '/' + file + '/' + sub_file;
+                                 $('#image_view_data_manager_img').attr('src', src);
+                                 $('#' + id).openModal();
+                        }
                 }   
             }   
         }) 
+  .directive('theModal', function() {
+        return {
+            restrict: 'EA',
+            scope: {
+                img_type: '@',
+            },
+            templateUrl: '/static/image_view_modal_data_manager.html',
+            replace: true,
+            transclude: true,
+            controller: function($scope, $elem, $attrs, $transclude, $http, $timeout) {
+                $scope.init = () => {
+                      console.log('modal init is called'); 
+                      //$('.modal-trigger').leanModal(); 
+                      //$scope.$parent.$parent.someFunc = () => {alert('working');}
+                  };
+
+            },
+        }
+    })
   .controller('DataManagerControl', function($scope, $http, $timeout, $mdToast, Webworker) {
 
     /**

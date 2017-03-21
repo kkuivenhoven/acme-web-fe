@@ -36,7 +36,7 @@ def render_template(request, template, context):
 
 # Index
 def index(request):
-    return HttpResponse(render_template(request, "web_fe/home.html", {}))
+    return HttpResponse(render_template(request, "web_fe/home.html", {'user': request.user}))
 
 
 # Login

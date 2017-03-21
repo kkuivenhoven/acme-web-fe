@@ -1,0 +1,17 @@
+<div class="modal" id="image_view_modal_data_manager" ng-init="init()" style="width: fit-content; max-height: 80%;">
+    <p id="image_title_data_manager" style="text-align: center;"></p>
+     <span> {{img_type}} </span>
+    <img ng-show="img_type == 'img'" id="image_view_data_manager_img" style="margin: 1vw;" class="" src=""/>
+    <object ng-show="img_type == 'pdf'" id="pdf_view_data_manager" style="margin: 1vw; width:70vw; height: 60vh;" dat="" type='application/pdf'></object>
+    <div class="" style="display: flex; justify-content: space-between; width: 100%">
+      <div>
+        <a href="#" target="_blank" ng-click="$('#image_view_modal').closeModal()" style="margin: 1vw;" class="waves-effect waves-light btn" id="image_link_data_manager">new window</a>
+      </div>
+      <div>
+        <a href="" style="margin:1vw;" class="waves-effect waves-light btn" id="image_set_favorite_data_manager" ng-click="set_favorite_plot()">favorite</a>
+      </div>
+      <div>
+        <a href="#" style="margin: 1vw;" class="waves-effect waves-light btn" id="image_download_link_data_manager" download>download</a>
+      </div>
+    </div>
+</div>

@@ -1,3 +1,40 @@
 #test {
         background-color: teal;
 }
+
+#testingthis {
+    color:blue !important;
+    cursor:pointer;
+    text-decoration:underline;
+    background-color: #F7F7F7;
+    opacity: 0.4;
+}
+
+#testingthis:hover {
+    text-decoration:none;
+    //text-shadow: 1px 1px 1px #555;
+}
+
+.file_picture {
+    width: 200px;
+    height: 120px;
+}
+
+.file_picture img {
+    width: 50%%;
+    height: auto;
+}
+
+    
+/*.zindex { 
+    z-index: 99000 !important;
+}*/
+
+.div:first-child {
+    opacity: .99;
+}
+
+.modaaal {
+    position: relative;
+    z-index: 1;
+}
