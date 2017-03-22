@@ -2,6 +2,26 @@
   'use strict';
 
   angular.module('data_manager', ['ngAnimate', 'ngMaterial', 'ngWebworker'])
+  .directive('importModal', function(){
+        return {
+            restrict: 'AE',
+            replace: true,
+            templateUrl: '/static/modal/import_modal.html',
+            scope: {
+                theimport: '@',
+            },
+        }
+    })
+  .directive('nerscModal', function(){
+        return {
+            restrict: 'AE',
+            replace: true,
+            templateUrl: '/static/modal/nersc_cred_modal.html',
+            scope: {
+                thenersc: '@',
+            },
+        }
+    })
   .directive('userData', function() {
         function reformatData(d, dir) {
             var userdata = d[dir];
@@ -65,9 +85,6 @@
                                 // Retrieve just the one part we care about here
                                 console.log('returning http for ' + $scope.directory);
                                 var data = reformatData(result.data, $scope.directory);
-                                /*this.addChild = function(nestedDirective) {
-                                    console.log('Got the message from nested directive:' + nestedDirective.message);
-                                };*/
                                 $scope.userdata = data;
                                 $timeout( () => {
                                     $('.userDataC').collapsible();
@@ -86,6 +103,20 @@
                         $scope.showModal = () => {
                             $('.modal1', opener.document).openModal();
                         };
+                        $scope.text_triggerModal = (id, file, folder) => {
+                                 var src = '/acme/userdata/text/userdata/' + window.ACMEDashboard.user + '/' + $scope.directory + '/' + folder.name + '/' + file;
+                                 //$('#text_edit_modal').attr('src', src);
+                                 $http({url: src,
+                                       headers: {
+                                          'X-CSRFToken' : $scope.$parent.$parent.get_csrf(),
+                                          'Content-Type': 'application/json'
+                                        }                      
+                                    }).then((result) => {
+                                     $('#edit_text_modal_pre').html(result.data);
+                                     $('#' + id).openModal();
+                                 })
+                                 //console.log("THIS IS THE ID: " + id);
+                        }
                         $scope.triggerModal = (id, file, folder) => {
                                  var src = '/acme/userdata/image/userdata/' + window.ACMEDashboard.user + '/' + $scope.directory + '/' + folder.name + '/' + file;
                                  $('#image_view_data_manager_img').attr('src', src);
@@ -96,28 +127,14 @@
                                  $('#image_view_data_manager_img').attr('src', src);
                                  $('#' + id).openModal();
                         }
+                        $scope.text_nested_triggerModal = (id, file, sub_file, folder) => {
+                                 var src = '/acme/userdata/text/userdata/' + window.ACMEDashboard.user + '/' + $scope.directory + '/' + folder.name + '/' + file + '/' + sub_file;
+                                 $('#text_edit_modal').attr('src', src);
+                                 $('#' + id).openModal();
+                        }
                 }   
             }   
         }) 
-  .directive('theModal', function() {
-        return {
-            restrict: 'EA',
-            scope: {
-                img_type: '@',
-            },
-            templateUrl: '/static/image_view_modal_data_manager.html',
-            replace: true,
-            transclude: true,
-            controller: function($scope, $elem, $attrs, $transclude, $http, $timeout) {
-                $scope.init = () => {
-                      console.log('modal init is called'); 
-                      //$('.modal-trigger').leanModal(); 
-                      //$scope.$parent.$parent.someFunc = () => {alert('working');}
-                  };
-
-            },
-        }
-    })
   .controller('DataManagerControl', function($scope, $http, $timeout, $mdToast, Webworker) {
 
     /**

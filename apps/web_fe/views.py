@@ -408,6 +408,15 @@ def credential_check_existance(request):
 
 
 @login_required
+def send_text(request, path):
+    fullpath = os.path.join(os.getcwd(), path)
+
+    if os.path.isfile(fullpath):
+        return sendfile(request, fullpath)
+    else:
+        return HttpResponse(status=404)
+
+@login_required
 def send_image(request, path):
     fullpath = os.path.join(os.getcwd(), path)
 

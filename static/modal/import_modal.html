@@ -1,0 +1,25 @@
+  <!-- Import modal -->
+  <div class="modal" id="import_modal" style="height: 20%; padding: 2vh;">
+    <div class="input-field col s12" 
+         ng-show="!import_type_selected">
+      <select id="import_type_select">
+        <option value="" disabled selected>Select the type of data</option>
+        <option value="diagnostic">Diagnostic</option>
+        <option value="observation">Observation</option>
+        <option value="model">Model</option>
+        <label>Select data type</label>
+      </select>
+      <a href="" class="wave-effect waves-light btn" ng-click="import_type_select()" ng-show="!import_type_select">import</a>
+    </div>
+    <div ng-show="import_type_select" class="input-field col s12">
+         <span>Destination folder</span>
+      <ul>
+        <li ng-repeat="folder in import_type_select_folders">
+          <a href="" class="wave-effect waves-light btn" ng-click="transfer_from_remote(folder, 'aims4.llnl.gov')">[[folder]]</a>
+        </li>
+        <li>
+          <a href="" class="wave-effect waves-light btn" ng-click="transfer_from_remote('new', 'aims4.llnl.gov')">new folder</a>
+        </li>
+      </ul>
+    </div>
+  </div>

@@ -1,51 +1,82 @@
-<ul class="collapsible" data-collapsible="accordion" ng-init="init()" style="position: relative">
+<ul class="collapsible" data-collapsible="accordion" ng-init="init()">
  <li>
-                <div class="collapsible-header" ng-click="getUserData()" style="position: relative">
+    <!--div class="collapsible-header"><i class="material-icons">filter_drama</i>First Section</div>
+    <div class="collapsible-body">
+        <ul class="collapsible" data-collapsible="accordion">
+            <li-->
+                <!--div class="collapsible-header" ng-click="getUserData()" ng-if="name == 'diagnostic output'"-->
+                <div class="collapsible-header" ng-click="getUserData()">
                     <span>{{ name }}</span>
                 </div>
-
-                <div class="collapsible-body" style="position: relative">
+                <div class="collapsible-body">
                     <div class="input-field col s6" ng-hide="showmodel" style-"margin-left: 3vw;">
                         <input type="text" ng-model="m_obs_query" name="m_obs_query_field">
                         <label for="m_obs_query_field">filter</label>
                     </div>
 
-                    <ul class="collapsible" style="position: relative">
+                    <ul class="collapsible">
                         <li ng-repeat="data_folder in userdata | filter: m_obs_query">
-                            <div class="collapsible-header" ng-click="load_model_cache(data_folder); toggle_search()" style="position: relative">
+                            <div class="collapsible-header" ng-click="load_model_cache(data_folder); buscar()">
                                 <span>{{data_folder.name}}</span>
                             </div>
-                            <div class="collapsible-body" style="position: relative">
-                                <span ng-if="name != 'Diagnostic Output'">
-                                    <span ng-repeat="file in data_folder.files">
-                                        <span ng-if="data_folder.sub_folders[data_folder.files.indexOf(file)].length == 0" style="padding-left:1em">
-                                            <span ng-if="!file.endsWith('.txt')">
-                                                <a ng-click="triggerModal('image_view_modal_data_manager', file, data_folder);" class="modal-trigger">{{file}}</a><br>
-                                            </span>
-                                            <span ng-if="file.endsWith('.txt')">
-                                                <a ng-click="text_triggerModal('text_edit_modal', file, data_folder);" class="modal-trigger">{{file}}</a><br>
-                                            </span>
-                                        </span>
+                            <div class="collapsible-body">
 
+
+                                <span ng-if="name != 'Diagnostic Output'">
+
+
+                                        <span ng-repeat="file in data_folder.files">
+                                            <span ng-if="data_folder.sub_folders[data_folder.files.indexOf(file)].length == 0" style="padding-left:1em">
+                                                <!--a href="" ng-click="open_nc(v, file, 'model')"> {{file}} </a> <br-->
+                                                <!--span ng-if="!file.endsWith('.jpg')">
+                                                    <a href="" ng-click="open_nc(file, files, 'model')">{{file}}</a><br>
+                                                </span-->
+                                                <!--span ng-if="file.endsWith('.jpg')" class="file_picture"-->
+                                                    <!--img ng-src="/acme/userdata/image/userdata/ktest5/model_output/cosas/{{file}}"><br-->
+                                                    <!--div class="modal" id="text_edit_modal" style="width: 90%; overflow: auto;">
+                                                        <section>   
+                                                            <div id="text_display">
+                                                                <pre>
+                                                                    [[text_to_be_displayed]]
+                                                                </pre>
+                                                            </div>
+                                                        </section>
+                                                    </div-->
+                                                    <!--a class="waves-effect waves-light btn" href="#modal1">Modal</a>
+                                                    <div id="modal1" class="modal">
+                                                        <div class="modal-content">
+                                                            <h4>Modal Header</h4>
+                                                            <p>A bunch of text</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                                                        </div>
+                                                    </div-->
+
+                                                <!--/span>
+                                                <{{file}}<br-->
+                                            </span>
                                             <span ng-if="data_folder.sub_folders[data_folder.files.indexOf(file)].length != 0">
                                                 <ul class="collapsible userDataC" style="padding-left:1em;" data-collapsible="expandable">
                                                 <!--ul class="collapsible userDataC" data-collapsible="accordion"-->
                                                     <li>
-                                                        <div class="collapsible-header active">
+                                                        <div class="collapsible-header">
                                                             {{file}}
                                                         </div>
                                                         <div class="collapsible-body" style="padding-left:1em">
                                                             <span ng-repeat="(key, value) in data_folder.sub_folders">
+                                                            <!--span ng-repeat="(key, value) in data_folder.sub_folders track by $index"-->
                                                                 <span ng-repeat="(sub_key, value1) in value">
                                                                     <span ng-if="sub_key == file"> 
                                                                         <span ng-repeat="(lala, vala) in value1">
-                                                                            <span ng-repeat="sub_file in vala">
-                                                                                <span ng-if="!sub_file.endsWith('.txt')">
-                                                                                    <a ng-click="nested_triggerModal('image_view_modal_data_manager', file, sub_file, data_folder);" class="modal-trigger">{{sub_file}}</a><br>
-                                                                                </span>
-                                                                                <span ng-if="sub_file.endsWith('.txt')">
-                                                                                    <a ng-click="text_nested_triggerModal('text_edit_modal', file, sub_file, data_folder);" class="modal-trigger">{{sub_file}}</a><br>
-                                                                                </span>
+                                                                            <span ng-repeat="v in vala">
+                                                                                 {{v}} <br> 
+                                                                                <!--span ng-if="!sub_file.endsWith('.jpg')">
+                                                                                    <a href="" ng-click="open_nc(sub_file, file, 'model')"> {{sub_file}} </a> <br-->
+                                                                                <!--/span>
+                                                                                <span ng-if="sub_file.endsWith('.jpg')" class="file_picture">
+                                                                                    <img ng-src="/acme/userdata/image/userdata/ktest5/model_output/cosas/{{sub_file}}"> <br>
+                                                                                </span-->
                                                                             </span>
                                                                         </span>
                                                                     </span>
@@ -56,6 +87,8 @@
                                                 </ul>
                                             </span>
                                         </span>
+
+
                                     </span>
 
 
@@ -116,5 +149,3 @@
     </div-->        
  </li>
 </ul>
-
-

@@ -391,43 +391,21 @@
          ng-show="!import_type_selected">
       <select id="import_type_select">
         <option value="" disabled selected>Select the type of data</option>
-        <option value="diagnostic">
-          Diagnostic
-        </option>
-        <option value="observation">
-          Observation
-        </option>
-        <option value="model">
-          Model
-        </option>
-        <label>
-          Select data type
-        </label>
+        <option value="diagnostic">Diagnostic</option>
+        <option value="observation">Observation</option>
+        <option value="model">Model</option>
+        <label>Select data type</label>
       </select>
-      <a href=""
-         class="wave-effect waves-light btn"
-         ng-click="import_type_select()"
-         ng-show="!import_type_select">
-          import
-      </a>
+      <a href="" class="wave-effect waves-light btn" ng-click="import_type_select()" ng-show="!import_type_select">import</a>
     </div>
-    <div ng-show="import_type_select"
-         class="input-field col s12">
+    <div ng-show="import_type_select" class="input-field col s12">
          <span>Destination folder</span>
       <ul>
         <li ng-repeat="folder in import_type_select_folders">
-          <a href=""
-             class="wave-effect waves-light btn"
-             ng-click="transfer_from_remote(folder, 'aims4.llnl.gov')">
-              [[folder]]
-          </a>
+          <a href="" class="wave-effect waves-light btn" ng-click="transfer_from_remote(folder, 'aims4.llnl.gov')">[[folder]]</a>
         </li>
         <li>
-          <a href=""
-             class="wave-effect waves-light btn"
-             ng-click="transfer_from_remote('new', 'aims4.llnl.gov')">
-              new folder
-          </a>
+          <a href="" class="wave-effect waves-light btn" ng-click="transfer_from_remote('new', 'aims4.llnl.gov')">new folder</a>
         </li>
       </ul>
     </div>
@@ -501,10 +479,9 @@
     </a>
   </div>
 
+
   <div class="modal" id="nersc_credential_modal">
-    <span style="margin: 1em;">
-      Enter your NERSC credentials
-    </span>
+    <span style="margin: 1em;">Enter your NERSC credentials</span>
     <div class="input-field col s6" style="margin: 1em;">
       <input id="nersc_username" ng-model="nersc_username" type="text">
       <label for="nersc_username">username</label>
@@ -513,12 +490,9 @@
       <input id="nersc_password" ng-model="nersc_password" type="password">
       <label for="nersc_password">password</label>
     </div>
-    <a href=""
-       ng-click="nersc_credential_submit()"
-       class="waves-light wave-effect btn">
-        submit
-    </a>
+    <a href="" ng-click="nersc_credential_submit()" class="waves-light wave-effect btn">submit</a>
   </div>
+
 
   <div class="modal" id="publish_credential_modal">
     <span style="margin: 1em;">
@@ -535,7 +509,9 @@
     <a href="" ng-click="publish_from_remote()" class="waves-light wave-effect btn"> submit </a>
   </div>
 
-  <div class="modal" id="image_view_modal_data_manager" style="width: fit-content; max-height: 80%;">
+
+  <!--put in it's own directive-->
+  <!--div class="modal" id="image_view_modal_data_manager" style="width: fit-content; max-height: 80%;">
     <p id="image_title_data_manager" style="text-align: center;"></p>
     <img ng-show="image_type == 'image'" id="image_view_data_manager" style="margin: 1vw;" class="" src=""/>
     <object ng-show="image_type == 'pdf'" id="pdf_view_data_manager" style="margin: 1vw; width:70vw; height: 60vh;" data="" type='application/pdf'></object>
@@ -550,8 +526,10 @@
         <a href="#" style="margin: 1vw;" class="waves-effect waves-light btn" id="image_download_link_data_manager" download>download</a>
       </div>
     </div>
-  </div>
+  </div-->
 
+
+  <!--put in it's own directive
   <!-- Text edit modal -->
   <div class="modal" id="text_edit_modal" style="width: 90%; overflow: auto;">
     <section>
@@ -561,6 +539,6 @@
         </pre>
       </div>
     </section>
-  </div>
+  </div-->
 
 </div>

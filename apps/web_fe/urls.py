@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^credential_check_existance/', views.credential_check_existance, name='credential_check_existance'),
     url(r'^save_layout/', views.save_layout, name='save_layout'),
     url(r'^load_layout/', views.load_layout, name='load_layout'),
+    url(r'^userdata/text/(?P<path>.*[\.text])$', views.send_text, name='send_text'),
     url(r'^userdata/image/(?P<path>.*[\.png|\.svg|\.pdf|\.jpg])$', views.send_image, name='send_image'),
     url(r'^get_notification_list/$', views.get_notification_list),
 ]
